@@ -6,6 +6,20 @@ import { preview } from '../assets';
 import { getRandomPrompt } from '../utils';
 import { FormField, Loader } from '../components';
 
+
+const CreatePost = () => {
+    const navigate = useNavigate();
+
+  const [form, setForm] = useState({
+    name: '',
+    prompt: '',
+    photo: '',
+  });
+
+    const [generatingImg, setGeneratingImg] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
   const handleSurpriseMe = () => {
@@ -17,7 +31,7 @@ import { FormField, Loader } from '../components';
     if (form.prompt) {
       try {
         setGeneratingImg(true);
-        const response = await fetch('https://dalle-arbb.onrender.com/api/v1/dalle', {
+        const response = await fetch('http://localhost:8080/api/v1/drey', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -45,7 +59,7 @@ import { FormField, Loader } from '../components';
     if (form.prompt && form.photo) {
       setLoading(true);
       try {
-        const response = await fetch('https://dalle-arbb.onrender.com/api/v1/post', {
+        const response = await fetch('http://localhost:8080/api/v1/post', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -65,18 +79,6 @@ import { FormField, Loader } from '../components';
       alert('Please generate an image with proper details');
     }
   };
-
-const CreatePost = () => {
-    const navigate = useNavigate();
-
-  const [form, setForm] = useState({
-    name: '',
-    prompt: '',
-    photo: '',
-  });
-
-    const [generatingImg, setGeneratingImg] = useState(false);
-  const [loading, setLoading] = useState(false);
 
 
   return (
@@ -109,7 +111,7 @@ const CreatePost = () => {
           />
 
 <div className="relative bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-64 p-3 h-64 flex justify-center items-center">
-//             { form.photo ? (
+            { form.photo ? (
               <img
                 src={form.photo}
                 alt={form.prompt}
